@@ -1,0 +1,5 @@
+DONE - implementar una solucion para que en las rutas hijas de panel/ y /admin/user-management/ salga un error, pues no deberian haber rutas hijas de panel/ (Implemented: Catch-all routes display a 'Not Found' page for undefined sub-routes of /panel and /admin/user-management)
+
+DONE - Puedo cambiar mi rol como admin en el panel sin ningun tipo de advertencia o algo (Implemented: Self-role edit is disabled in Admin Panel)
+
+PENDING (Post-Core CRUD) - crear una contraseña temporal para los usuarios que posiblemente nesesiten cambiarla, advirtiendoles de que deben cambiarla.

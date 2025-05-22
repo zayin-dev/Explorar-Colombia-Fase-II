@@ -1,0 +1,42 @@
+# Node.js / General
+node_modules/
+npm-debug.log
+yarn-error.log
+.env
+.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.log
+logs/
+*.lock
+
+# React (create-react-app)
+/frontend/build
+/frontend/node_modules
+/frontend/.env
+/frontend/.env.local
+/frontend/.env.development.local
+/frontend/.env.test.local
+/frontend/.env.production.local
+
+# Backend (assuming it might have its own node_modules or specific build outputs)
+/backend/node_modules
+# If your backend has a build step, add its output folder here, e.g., /backend/dist
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor specific
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Other
+Ethereal-login-info.txt
+log.txt

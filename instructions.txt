@@ -1,0 +1,38 @@
+
+Requerimientos Funcionalidades de la FASE-II  que debe implementar en el aplicativo.
+
+a. El sitio debe contener toda la aplicación en varias carpetas según su funcionalidad y organizado jerárquicamente, una sugerencia es en una carpeta tener todo lo relacionado con el frontend y en otra carpeta todo lo relativo al backend, etc.
+
+b. Base de datos: debe utilizarse un servidor de base de datos local, utilizando XAMPP; las tablas y sus datos debe ser creada automáticamente mediante scripts por la app según cada aplicación, mínimo debe contener cuatro(4) tablas.
+
+c. El sitio debe implementar  una “vista” para usuarios no registrados (visitantes) y otra para usuarios registrados. La vista para usuarios registrados sera accesible solo si el usuario ha iniciado sesion.
+
+El sitio debe contener todo de la Fase I mejorado y adicionando las siguientes funcionalidades:
+
+a. Mantenimiento de todas las tablas: incluir un componente en el frontend wl cual permita crear, leer, modificar y eliminar usuarios. Implementar el CRUD usando REST. 
+
+El administrador ingresara desde el frontend iniciando sesion. Una vez iniciada la sesion, el administrador sera redirigido a una pagina en la cual podra administrar todos los usuarios, tambien podra ingresar nuevos datos a las tablas de la BD, modificar, eliminar y realizar búsquedas.
+
+b. El aplicativo debe implementarse usando ROUTER para implementar rutas en el backend.
+
+c. Login de autenticación de usuarios y contraseña verificando la existencia en la BD; En caso de olvido de contraseña, enviar una nueva contraseña al correo registrado del usuario, utilizar una cuenta que permita reenviar correos.
+
+d. Bajar y subir todo tipo archivos al servidor (texto, imágenes, videos) del servidor al cliente y viceversa.
+
+e. Implementar un servidor de contenidos de imágenes turísticas de la ciudad de Bucaramanga y área metropolitana (máximo 3 imágenes).
+
+f. Un aporte del equipo: implementar alguna funcionalidad novedosa y de interés de su propia iniciativa: sugerencias usando un middleware para validar el correo electrónico con una expresión regular o
+ 
+(opcional)
+
+1. Desarrollar un webService o como alternativa un API de google para implementar un traductor de monedas web de pesos a (dolares o euros ) y viceversa e implementar la interfaz adecuada incorporala al sitio web del proyecto como traductor de moneda.
+
+2. Generar un codigo QR  desde un  script , que permita a los usuarios leer el código desde un lector QR e inscribirse a un evento o  por ejemplo,   seleccionar un menu de comidas de un restaurante.
+
+3. Implementar captcha para evitar ataques de robots tratando de autenticarse.
+
+4. Implementar dos cookies, una para llevar el conteo de  visitas al sitio y otra para recordar el nombre de usuario y contraseña
+
+5. Manejo de sesiones  para controlar el tiempo de caducidad de permanencia del usuario.  Cuando se pase el límite de tiempo  debe terminar la sesión y regresarlo al inicio.
+
+6. Para prueba colocar un tiempo de 1 minuto sin actividad se caduca la sesión.
