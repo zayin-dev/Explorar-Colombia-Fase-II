@@ -1,0 +1,20 @@
+DONE - implementar una solucion para que en las rutas hijas de panel/ y /admin/user-management/ salga un error, pues no deberian haber rutas hijas de panel/ (Implemented: Catch-all routes display a 'Not Found' page for undefined sub-routes of /panel and /admin/user-management)
+
+DONE - Puedo cambiar mi rol como admin en el panel sin ningun tipo de advertencia o algo (Implemented: Self-role edit is disabled in Admin Panel)
+
+PENDING (Post-Core CRUD) - crear una contraseña temporal para los usuarios que posiblemente nesesiten cambiarla, advirtiendoles de que deben cambiarla.
+
+En el panel de administracion de cuentas de usuario, al listart a los ususarios no sale el rol de cada usuario.
+
+Agregar un boton que permita ver como texto la contraseña que esta digitando el usuario (Ese tipico boton de ojo que sale al lado del cuadro de la contraseña)
+
+Agregar un boton en el NavBar para que el admin pueda ingresar de manera mas sencilla al panel de administracion de usuarios
+
+configurar el proyecto para que al momento de inicializar el proyecto se ejecute el script de creacion de la base de datos de manera automatica, sin la necesidad de ejecutarlo por aparte.
+
+Agregar un componente (?) el cual le permita al usuario tener una imagen de perfil. Por defecto todos los usuarios tendran una imagen de usuario generica la cual podran cambiar si asi lo desean. Si el usuario quiere cambiar la imagen, podra subir una imagen. La imagen se reflejara en la UI como una circunfunferencia con un borde con cierta anchura (5 px aproximadamente)
+
+
+Funcionalidades de UI (opcionales):
+
+Agregar un tema claro u oscuro. dependiendo del tema, habra una imagen de fondo para el body que acompañe al tema. Adicionalmente el body tendra una opacidad en sus distintas secciones, con una "textura" similar al cristal opaco, como con un efecto de "blur".
