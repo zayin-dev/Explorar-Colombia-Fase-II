@@ -1,0 +1,55 @@
+
+CHANGELOG DETALLADO DEL PROYECTO
+
+1. Organización de la estructura del proyecto
+- Se crearon las carpetas `frontend` y `backend` para separar la lógica del cliente y del servidor.
+- El archivo `app.js` fue movido al backend y posteriormente renombrado a `index.js`.
+- Se inicializó un proyecto Node.js en la carpeta `backend` (`npm init -y`).
+- Se instaló y configuró Express.js como framework para el backend.
+- Se actualizó package.json con el archivo principal (`index.js`) y se añadió el script de inicio.
+
+2. Configuración e inicialización de la base de datos (MySQL/XAMPP)
+- Se instaló la dependencia `mysql2`.
+- Se creó `db.config.js` dentro de `backend/config` con datos de conexión.
+- Se creó el script `db_setup.js` para crear la base de datos `webapp_db` y las tablas: `users`, `products`, `categories`, `product_categories`.
+
+3. Implementación de rutas con Express Router
+- Se creó `routes/user.routes.js`.
+- Se configuró `index.js` para montar las rutas bajo `/api/users`.
+- Se añadió `express.json()` para parseo de cuerpos JSON.
+
+4. CRUD completo para usuarios
+- Se creó `controllers/user.controller.js`.
+- Se implementaron funciones para `createUser`, `getAllUsers`, `getUserById`, `updateUser`, `deleteUser`.
+- Se vincularon las rutas en `user.routes.js`.
+- Posteriormente se protegieron con JWT.
+
+5. Sistema de login y autenticación con JWT
+- Se instaló `jsonwebtoken`.
+- Se creó `auth.controller.js` con login que verifica credenciales y genera un JWT.
+- Se montaron las rutas de login bajo `/api/auth`.
+
+6. CORS y conexión entre frontend y backend
+- Se instaló y configuró `cors` en el backend para permitir comunicación cross-origin.
+
+7. Protección de rutas con middleware JWT
+- Se creó `middleware/authJwt.js` con `verifyToken`.
+- Se protegieron rutas sensibles (`GET`, `PUT`, `DELETE` de usuarios).
+
+8. Gestión de roles y autorización
+- Se añadió columna `role` en tabla `users`.
+- Se actualizó `seed_users.js` para crear usuarios con roles `admin` y `user`.
+- Se añadió `isAdmin` en `authJwt.js`.
+- Se protegieron rutas críticas con `verifyToken` + `isAdmin`.
+
+9. Seed de usuarios para testing
+- Se creó `seed_users.js` para insertar:
+  - `adminuser` (admin)
+  - `testuser1`, `testuser2` (usuarios normales)
+- Contraseñas hasheadas con `bcryptjs`.
+
+10. Modificación del componente de login en React
+- Se reemplazó lógica de prueba por llamada real a `/api/auth/login`.
+- En éxito: se guarda `accessToken`, se redirige.
+- En error: se muestra mensaje adecuado.
+

@@ -1,3 +1,4 @@
+
 const mysql = require('mysql2/promise'); // Driver MySQL con promesas
 const dbConfig = require('../config/db.config.js'); // Configuración de la BD
 const bcrypt = require('bcryptjs'); // Para hashing de contraseñas
