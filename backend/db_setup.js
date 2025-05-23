@@ -43,8 +43,10 @@ async function initializeDatabase() {
 
     // 5. Crear tablas necesarias para la aplicación
     // Tabla de usuarios: almacena datos de autenticación y perfil
-    const createUsersTable = `
-      CREATE TABLE IF NOT EXISTS users (
+
+    /**
+     * Tabla de usuarios: almacena datos de autenticación y perfil
+     * CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY, // Identificador único
         username VARCHAR(255) NOT NULL UNIQUE, // Nombre de usuario único
         password VARCHAR(255) NOT NULL, // Contraseña (hash)
@@ -54,42 +56,80 @@ async function initializeDatabase() {
         reset_password_expires DATETIME NULL, // Expiración del token
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP // Fecha de creación
       )
+    */
+    const createUsersTable = `
+      CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY, 
+        username VARCHAR(255) NOT NULL UNIQUE, 
+        password VARCHAR(255) NOT NULL, 
+        email VARCHAR(255) NOT NULL UNIQUE, 
+        role VARCHAR(50) NOT NULL DEFAULT 'user', 
+        reset_password_token VARCHAR(255) NULL, 
+        reset_password_expires DATETIME NULL, 
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+      )
     `;
     await connection.query(createUsersTable);
     console.log("Table 'users' created.");
 
     // Tabla de categorías: almacena las categorías de productos
-    const createCategoriesTable = `
-      CREATE TABLE IF NOT EXISTS categories (
+    /*
+    CREATE TABLE IF NOT EXISTS categories (
         id INT AUTO_INCREMENT PRIMARY KEY, // Identificador único
         name VARCHAR(255) NOT NULL UNIQUE, // Nombre de la categoría
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP // Fecha de creación
+      )
+    */
+    const createCategoriesTable = `
+      CREATE TABLE IF NOT EXISTS categories (
+        id INT AUTO_INCREMENT PRIMARY KEY, 
+        name VARCHAR(255) NOT NULL UNIQUE, 
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
       )
     `;
     await connection.query(createCategoriesTable);
     console.log("Table 'categories' created or already exists.");
 
     // Tabla de productos: almacena los productos de la tienda o sistema
-    const createProductsTable = `
-      CREATE TABLE IF NOT EXISTS products (
+
+    /*
+    CREATE TABLE IF NOT EXISTS products (
         id INT AUTO_INCREMENT PRIMARY KEY, // Identificador único
         name VARCHAR(255) NOT NULL, // Nombre del producto
         description TEXT, // Descripción
         price DECIMAL(10, 2), // Precio
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP // Fecha de creación
       )
+    */
+    const createProductsTable = `
+      CREATE TABLE IF NOT EXISTS products (
+        id INT AUTO_INCREMENT PRIMARY KEY, 
+        name VARCHAR(255) NOT NULL, 
+        description TEXT, 
+        price DECIMAL(10, 2), 
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+      )
     `;
     await connection.query(createProductsTable);
     console.log("Table 'products' created or already exists.");
 
     // Tabla de relación muchos a muchos entre productos y categorías
-    const createProductCategoriesTable = `
-      CREATE TABLE IF NOT EXISTS product_categories (
+    /*
+    CREATE TABLE IF NOT EXISTS product_categories (
         product_id INT, // ID del producto
         category_id INT, // ID de la categoría
         PRIMARY KEY (product_id, category_id), // Clave primaria compuesta
         FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE, // FK a productos
         FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE // FK a categorías
+      )
+    */
+    const createProductCategoriesTable = `
+      CREATE TABLE IF NOT EXISTS product_categories (
+        product_id INT, 
+        category_id INT, 
+        PRIMARY KEY (product_id, category_id), 
+        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE, 
+        FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE 
       )
     `;
     await connection.query(createProductCategoriesTable);
