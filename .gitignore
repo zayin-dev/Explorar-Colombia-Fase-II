@@ -38,6 +38,5 @@ Thumbs.db
 *.sw?
 
 # Other
-Ethereal-login-info.txt
-log.txt
 history.txt
+log.txt
