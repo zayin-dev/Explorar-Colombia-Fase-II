@@ -1,8 +1,40 @@
 // filepath: z:\UNIVERSIDAD\6 SEMESTRE\P. Web\Proyecto\src\datos\infoRegiones.js
+import Amazonas from '../departamentos/Amazonas.webp';
+import Antioquia from '../departamentos/Antioquia.jpg';
+import Arauca from '../departamentos/Arauca.JPG';
+import Atlántico from '../departamentos/Atlantico.jpg';
+import Bolívar from '../departamentos/Bolivar.png';
+import Boyacá from '../departamentos/Boyaca.jpg';
+import Caldas from '../departamentos/Caldas.webp';
+import Caquetá from '../departamentos/Caqueta.avif';
+import Casanare from '../departamentos/Casanare.jpeg';
+import Cauca from '../departamentos/Cauca.jpg';
+import Cesar from '../departamentos/Cesar.png';
+import Chocó from '../departamentos/Choco.jpg';
+import Córdoba from '../departamentos/Cordoba.jpg';
+import Cundinamarca from '../departamentos/Cundinamarca.png';
+import Guainía from '../departamentos/Guainia.jpg';
+import Guaviare from '../departamentos/Guaviare.webp';
+import Huila from '../departamentos/Huila.jpg';
+import La_Guajira from '../departamentos/LaGuajira.jpg';
+import Magdalena from '../departamentos/Magdalena.jpg';
+import Meta from '../departamentos/Meta.jpg';
+import Nariño from '../departamentos/Narino.jpg';
+import Norte_de_Santander from '../departamentos/Norte_de_Santander.jpg';
+import Putumayo from '../departamentos/Putumayo.jpg';
+import Quindío from '../departamentos/Quindio.jpg';
+import Risaralda from '../departamentos/Risaralda.jpg';
+import Santander from '../departamentos/Santander.webp';
+import Sucre from '../departamentos/Sucre.jpg';
+import Tolima from '../departamentos/Tolima.avif';
+import Valle_del_Cauca from '../departamentos/Valle_del_Cauca.avif';
+import Vaupés from '../departamentos/Vaupes.jpg';
+import Vichada from '../departamentos/Vichada.jpg'; 
+
 export const infoRegiones = {
   Amazonas: {
     descripcion: "Departamento selvático en el sur de Colombia, caracterizado por su biodiversidad y el río Amazonas.",
-    imagen: "/imagenes/amazonas.jpg",
+    imagen:Amazonas,
     datosClave: [
       "Capital: Leticia",
       "Municipios: 2",
@@ -12,7 +44,7 @@ export const infoRegiones = {
   },
   Antioquia: {
     descripcion: "Antioquia, con Medellín como capital, es un eje de cultura paisa y verdes montañas.",
-    imagen: "/imagenes/antioquia.jpg",
+    imagen: Antioquia,
     datosClave: [
       "Capital: Medellín",
       "Municipios: 125",
@@ -22,7 +54,7 @@ export const infoRegiones = {
   },
   Arauca: {
     descripcion: "Departamento de los Llanos Orientales, con economía petrolera y ganadera.",
-    imagen: "/imagenes/arauca.jpg",
+    imagen: Arauca,
     datosClave: [
       "Capital: Arauca",
       "Municipios: 7",
@@ -32,7 +64,7 @@ export const infoRegiones = {
   },
   Atlántico: {
     descripcion: "Departamento costero caribeño, conocido por su cultura y economía industrial.",
-    imagen: "/imagenes/atlantico.jpg",
+    imagen: Atlántico,
     datosClave: [
       "Capital: Barranquilla",
       "Municipios: 23",
@@ -42,7 +74,7 @@ export const infoRegiones = {
   },
   Bolívar: {
     descripcion: "Ubicado en el Caribe, hogar de Cartagena, una ciudad con gran herencia histórica.",
-    imagen: "/imagenes/bolivar.jpg",
+    imagen: Bolívar,
     datosClave: [
       "Capital: Cartagena",
       "Municipios: 46",
@@ -52,7 +84,7 @@ export const infoRegiones = {
   },
   Boyacá: {
     descripcion: "Región montañosa con legado colonial e histórico en la independencia.",
-    imagen: "/imagenes/boyaca.jpg",
+    imagen: Boyacá,
     datosClave: [
       "Capital: Tunja",
       "Municipios: 123",
@@ -62,7 +94,7 @@ export const infoRegiones = {
   },
   Caldas: {
     descripcion: "Parte del Eje Cafetero, con economía basada en el café y servicios.",
-    imagen: "/imagenes/caldas.jpg",
+    imagen: Caldas,
     datosClave: [
       "Capital: Manizales",
       "Municipios: 27",
@@ -72,7 +104,7 @@ export const infoRegiones = {
   },
   Caquetá: {
     descripcion: "Ubicado en la Amazonía colombiana, rico en biodiversidad.",
-    imagen: "/imagenes/caqueta.jpg",
+    imagen: Caquetá,
     datosClave: [
       "Capital: Florencia",
       "Municipios: 16",
@@ -82,7 +114,7 @@ export const infoRegiones = {
   },
   Casanare: {
     descripcion: "Departamento de los Llanos, destacado por la ganadería y el petróleo.",
-    imagen: "/imagenes/casanare.jpg",
+    imagen: Casanare,
     datosClave: [
       "Capital: Yopal",
       "Municipios: 19",
@@ -92,7 +124,7 @@ export const infoRegiones = {
   },
   Cauca: {
     descripcion: "Zona montañosa del suroccidente, culturalmente diversa con comunidades indígenas.",
-    imagen: "/imagenes/cauca.jpg",
+    imagen: Cauca,
     datosClave: [
       "Capital: Popayán",
       "Municipios: 42",
@@ -102,7 +134,7 @@ export const infoRegiones = {
   },
   Cesar: {
     descripcion: "Departamento del Caribe con tierras cálidas, agricultura y minería.",
-    imagen: "/imagenes/cesar.jpg",
+    imagen: Cesar,
     datosClave: [
       "Capital: Valledupar",
       "Municipios: 25",
@@ -112,7 +144,7 @@ export const infoRegiones = {
   },
   Chocó: {
     descripcion: "Región pluviosa del Pacífico, rica en recursos naturales y cultura afrocolombiana.",
-    imagen: "/imagenes/choco.jpg",
+    imagen: Chocó,
     datosClave: [
       "Capital: Quibdó",
       "Municipios: 30",
@@ -122,7 +154,7 @@ export const infoRegiones = {
   },
   Córdoba: {
     descripcion: "Departamento caribeño con economía ganadera y gran riqueza musical.",
-    imagen: "/imagenes/cordoba.jpg",
+    imagen: Córdoba,
     datosClave: [
       "Capital: Montería",
       "Municipios: 30",
@@ -132,7 +164,7 @@ export const infoRegiones = {
   },
   Cundinamarca: {
     descripcion: "Rodea a Bogotá, con municipios agrícolas y centros industriales.",
-    imagen: "/imagenes/cundinamarca.jpg",
+    imagen: Cundinamarca,
     datosClave: [
       "Capital: Bogotá (distrito capital)",
       "Municipios: 116",
@@ -142,7 +174,7 @@ export const infoRegiones = {
   },
   Guainía: {
     descripcion: "Región amazónica de gran riqueza natural y baja densidad poblacional.",
-    imagen: "/imagenes/guainia.jpg",
+    imagen: Guainía,
     datosClave: [
       "Capital: Inírida",
       "Municipios: 1",
@@ -152,7 +184,7 @@ export const infoRegiones = {
   },
   Guaviare: {
     descripcion: "Transición entre los Andes y la Amazonía, con bosques y sabanas.",
-    imagen: "/imagenes/guaviare.jpg",
+    imagen: Guaviare,
     datosClave: [
       "Capital: San José del Guaviare",
       "Municipios: 4",
@@ -162,7 +194,7 @@ export const infoRegiones = {
   },
   Huila: {
     descripcion: "Importante productor de café y hogar del Desierto de la Tatacoa.",
-    imagen: "/imagenes/huila.jpg",
+    imagen: Huila,
     datosClave: [
       "Capital: Neiva",
       "Municipios: 37",
@@ -172,7 +204,7 @@ export const infoRegiones = {
   },
   La_Guajira: {
     descripcion: "Península caribeña con cultura Wayuu y gran diversidad paisajística.",
-    imagen: "/imagenes/guajira.jpg",
+    imagen: La_Guajira,
     datosClave: [
       "Capital: Riohacha",
       "Municipios: 15",
@@ -182,7 +214,7 @@ export const infoRegiones = {
   },
   Magdalena: {
     descripcion: "Departamento costero con playas, montañas y legado histórico en Santa Marta.",
-    imagen: "/imagenes/magdalena.jpg",
+    imagen: Magdalena,
     datosClave: [
       "Capital: Santa Marta",
       "Municipios: 30",
@@ -192,7 +224,7 @@ export const infoRegiones = {
   },
   Meta: {
     descripcion: "Puerta de los Llanos Orientales, gran actividad agropecuaria.",
-    imagen: "/imagenes/meta.jpg",
+    imagen: Meta,
     datosClave: [
       "Capital: Villavicencio",
       "Municipios: 29",
@@ -202,7 +234,7 @@ export const infoRegiones = {
   },
   Nariño: {
     descripcion: "En el suroeste del país, combina volcanes, altiplanos y cultura andina.",
-    imagen: "/imagenes/narino.jpg",
+    imagen: Nariño,
     datosClave: [
       "Capital: Pasto",
       "Municipios: 64",
@@ -212,7 +244,7 @@ export const infoRegiones = {
   },
   Norte_de_Santander: {
     descripcion: "Departamento fronterizo con Venezuela, de gran actividad comercial e industrial.",
-    imagen: "/imagenes/nortesantander.jpg",
+    imagen:   Norte_de_Santander,
     datosClave: [
       "Capital: Cúcuta",
       "Municipios: 40",
@@ -222,7 +254,7 @@ export const infoRegiones = {
   },
   Putumayo: {
     descripcion: "Departamento amazónico con selvas exuberantes y diversidad cultural.",
-    imagen: "/imagenes/putumayo.jpg",
+    imagen: Putumayo,
     datosClave: [
       "Capital: Mocoa",
       "Municipios: 13",
@@ -232,7 +264,7 @@ export const infoRegiones = {
   },
   Quindío: {
     descripcion: "Pequeño pero turístico, ubicado en el corazón del Eje Cafetero.",
-    imagen: "/imagenes/quindio.jpg",
+    imagen: Quindío,
     datosClave: [
       "Capital: Armenia",
       "Municipios: 12",
@@ -242,7 +274,7 @@ export const infoRegiones = {
   },
   Risaralda: {
     descripcion: "Región cafetera con desarrollo urbano y paisajes montañosos.",
-    imagen: "/imagenes/risaralda.jpg",
+    imagen: Risaralda,
     datosClave: [
       "Capital: Pereira",
       "Municipios: 14",
@@ -252,7 +284,7 @@ export const infoRegiones = {
   },
   Santander: {
     descripcion: "Región montañosa, con cañones y una fuerte identidad regional.",
-    imagen: "/imagenes/santander.jpg",
+    imagen: Santander,
     datosClave: [
       "Capital: Bucaramanga",
       "Municipios: 87",
@@ -262,7 +294,7 @@ export const infoRegiones = {
   },
   Sucre: {
     descripcion: "Departamento del Caribe con riqueza cultural y musical.",
-    imagen: "/imagenes/sucre.jpg",
+    imagen: Sucre,
     datosClave: [
       "Capital: Sincelejo",
       "Municipios: 26",
@@ -272,7 +304,7 @@ export const infoRegiones = {
   },
   Tolima: {
     descripcion: "Centro agrícola de Colombia, con diversidad geográfica.",
-    imagen: "/imagenes/tolima.jpg",
+    imagen: Tolima,
     datosClave: [
       "Capital: Ibagué",
       "Municipios: 47",
@@ -282,7 +314,7 @@ export const infoRegiones = {
   },
   Valle_del_Cauca: {
     descripcion: "Región pacífica e industrial con gran desarrollo agrícola.",
-    imagen: "/imagenes/valledelcauca.jpg",
+    imagen: Valle_del_Cauca,
     datosClave: [
       "Capital: Cali",
       "Municipios: 42",
@@ -292,7 +324,7 @@ export const infoRegiones = {
   },
   Vaupés: {
     descripcion: "Departamento amazónico poco poblado, con selvas y comunidades indígenas.",
-    imagen: "/imagenes/vaupes.jpg",
+    imagen: Vaupés,
     datosClave: [
       "Capital: Mitú",
       "Municipios: 1",
@@ -302,7 +334,7 @@ export const infoRegiones = {
   },
   Vichada: {
     descripcion: "Extenso y despoblado, con sabanas, ríos y frontera con Venezuela.",
-    imagen: "/imagenes/vichada.jpg",
+    imagen: Vichada,
     datosClave: [
       "Capital: Puerto Carreño",
       "Municipios: 4",

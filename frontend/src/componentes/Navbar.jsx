@@ -16,13 +16,7 @@ function BarraNavegacion({ isAuthenticated, onLogout }) {
             ) : (
               <Nav.Link onClick={onLogout}>Logout</Nav.Link>
             )}
-            <NavDropdown title="Más" id="basic-nav-dropdown">
-              {isAuthenticated && <NavDropdown.Item as={Link} to="/profile">Mi Perfil</NavDropdown.Item>}
-              <NavDropdown.Item href="#accion1">Acción 1</NavDropdown.Item>
-              <NavDropdown.Item href="#accion2">Acción 2</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#separado">Separado</NavDropdown.Item>
-            </NavDropdown>
+            
           </Nav>
         </Navbar.Collapse>
       </Container>

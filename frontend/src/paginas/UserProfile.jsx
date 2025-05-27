@@ -19,12 +19,6 @@ const API_URL_PASSWORD = '/api/auth/profile/password';
  * incluyendo el cambio de nombre de usuario, email y contraseña.
  */
 const UserProfile = () => {
-  // --- NUEVO: Estados para imagen de perfil --- //
-  const [profileImage, setProfileImage] = useState(null); // URL de la imagen actual
-  const [selectedImage, setSelectedImage] = useState(null); // Archivo seleccionado
-  const [imageLoading, setImageLoading] = useState(false);
-  const [imageMessage, setImageMessage] = useState('');
-  const [imageError, setImageError] = useState('');
   // Hook para navegación programática
   const navigate = useNavigate();
 
@@ -69,74 +63,10 @@ const UserProfile = () => {
       setCurrentUser({ username: userData.username, email: userData.email });
       setNewUsername(userData.username); // Pre-rellenar el campo de username
       setNewEmail(userData.email);       // Pre-rellenar el campo de email
-      // --- NUEVO: Cargar imagen de perfil si existe ---
-      if (userData.profile_image) {
-        setProfileImage(userData.profile_image);
-      }
     }
   }, [navigate]);
 
   // --- Manejadores de Eventos (Formularios) --- //
-
-  /**
-   * @function handleImageChange
-   * @description Maneja la selección de archivo de imagen.
-   */
-  const handleImageChange = (e) => {
-    setSelectedImage(e.target.files[0]);
-    setImageMessage('');
-    setImageError('');
-  };
-
-  /**
-   * @function handleUploadProfileImage
-   * @description Sube la imagen de perfil al backend.
-   */
-  const handleUploadProfileImage = async (e) => {
-    e.preventDefault();
-    setImageLoading(true);
-    setImageMessage('');
-    setImageError('');
-    const token = localStorage.getItem('accessToken');
-    const userData = JSON.parse(localStorage.getItem('user'));
-    if (!selectedImage) {
-      setImageError('Por favor selecciona una imagen.');
-      setImageLoading(false);
-      return;
-    }
-    if (!userData || !userData.id) {
-      setImageError('No se pudo obtener el ID del usuario.');
-      setImageLoading(false);
-      return;
-    }
-    try {
-      const formData = new FormData();
-      formData.append('profile_image', selectedImage);
-      const response = await fetch(`/api/users/${userData.id}/profile-image`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-        body: formData
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setImageError(data.message || 'Error al subir la imagen.');
-      } else {
-        setImageMessage(data.message || 'Imagen de perfil actualizada correctamente.');
-        setProfileImage(data.profile_image);
-        // Actualizar en localStorage
-        userData.profile_image = data.profile_image;
-        localStorage.setItem('user', JSON.stringify(userData));
-        setSelectedImage(null);
-      }
-    } catch (error) {
-      console.error('Error al subir imagen:', error);
-      setImageError('Error de red o servidor al subir la imagen.');
-    } finally {
-      setImageLoading(false);
-    }
-  };
 
   /**
    * @function handleUpdateUsername
@@ -307,37 +237,6 @@ const UserProfile = () => {
       <Row className="justify-content-md-center">
         <Col md={8} lg={6}>
           <h2 className="text-center mb-4">Gestionar Perfil</h2>
-
-          {/* --- NUEVO: Sección Imagen de Perfil --- */}
-          <Card className="mb-4 text-center">
-            <Card.Header as="h5">Imagen de Perfil</Card.Header>
-            <Card.Body>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ width: 120, height: 120, borderRadius: '50%', overflow: 'hidden', marginBottom: 16, border: '2px solid #ddd', background: '#f8f9fa' }}>
-                  {profileImage ? (
-                    <img
-                      src={profileImage.startsWith('http') ? profileImage : `${profileImage}`}
-                      alt="Imagen de perfil"
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  ) : (
-                    <span style={{ lineHeight: '120px', color: '#bbb' }}>Sin imagen</span>
-                  )}
-                </div>
-                <Form onSubmit={handleUploadProfileImage} style={{ width: '100%', maxWidth: 350 }}>
-                  {imageMessage && <Alert variant="success">{imageMessage}</Alert>}
-                  {imageError && <Alert variant="danger">{imageError}</Alert>}
-                  <Form.Group controlId="formProfileImage" className="mb-3">
-                    <Form.Label>Cambiar imagen de perfil</Form.Label>
-                    <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
-                  </Form.Group>
-                  <Button variant="primary" type="submit" disabled={imageLoading} style={{ minWidth: 160 }}>
-                    {imageLoading ? <><Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> Subiendo...</> : 'Subir Imagen'}
-                  </Button>
-                </Form>
-              </div>
-            </Card.Body>
-          </Card>
 
           {/* --- Sección: Actualizar Nombre de Usuario --- */}
           <Card className="mb-4">
