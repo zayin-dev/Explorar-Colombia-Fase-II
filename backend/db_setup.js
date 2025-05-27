@@ -32,12 +32,20 @@ async function initializeDatabase() {
 
     // 4. Eliminar tablas existentes (¡Destructivo! Borra todos los datos)
     // Se eliminan en orden inverso de dependencias para evitar errores por claves foráneas
-    await connection.query('DROP TABLE IF EXISTS product_categories;'); // Tabla de relación muchos a muchos
+    // Tablas antiguas (puedes eliminar estas líneas si ya no usas estas tablas)
+    await connection.query('DROP TABLE IF EXISTS product_categories;'); // Tabla de relación muchos a muchos (antigua)
     console.log("Table 'product_categories' dropped if it existed.");
-    await connection.query('DROP TABLE IF EXISTS products;'); // Productos
+    await connection.query('DROP TABLE IF EXISTS products;'); // Productos (antigua)
     console.log("Table 'products' dropped if it existed.");
-    await connection.query('DROP TABLE IF EXISTS categories;'); // Categorías
+    await connection.query('DROP TABLE IF EXISTS categories;'); // Categorías (antigua)
     console.log("Table 'categories' dropped if it existed.");
+    // Tablas nuevas para turismo (eliminar en orden inverso de dependencias)
+    await connection.query('DROP TABLE IF EXISTS destination_category_rel;'); // Relación muchos a muchos
+    console.log("Tabla 'destination_category_rel' eliminada si existía.");
+    await connection.query('DROP TABLE IF EXISTS destinations;'); // Destinos turísticos
+    console.log("Tabla 'destinations' eliminada si existía.");
+    await connection.query('DROP TABLE IF EXISTS destination_categories;'); // Categorías de destinos
+    console.log("Tabla 'destination_categories' eliminada si existía.");
     await connection.query('DROP TABLE IF EXISTS users;'); // Usuarios
     console.log("Table 'users' dropped if it existed.");
 
@@ -66,74 +74,76 @@ async function initializeDatabase() {
         role VARCHAR(50) NOT NULL DEFAULT 'user', 
         reset_password_token VARCHAR(255) NULL, 
         reset_password_expires DATETIME NULL, 
+        profile_image VARCHAR(512) NULL, // Ruta o URL de la imagen de perfil
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
       )
     `;
     await connection.query(createUsersTable);
     console.log("Table 'users' created.");
 
-    // Tabla de categorías: almacena las categorías de productos
+    // Tabla de categorías de destinos turísticos
     /*
-    CREATE TABLE IF NOT EXISTS categories (
-        id INT AUTO_INCREMENT PRIMARY KEY, // Identificador único
-        name VARCHAR(255) NOT NULL UNIQUE, // Nombre de la categoría
+    CREATE TABLE IF NOT EXISTS destination_categories (
+        id INT AUTO_INCREMENT PRIMARY KEY, // Identificador único de la categoría
+        name VARCHAR(255) NOT NULL UNIQUE, // Nombre de la categoría (ej: playa, montaña, ciudad)
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP // Fecha de creación
       )
     */
-    const createCategoriesTable = `
-      CREATE TABLE IF NOT EXISTS categories (
-        id INT AUTO_INCREMENT PRIMARY KEY, 
-        name VARCHAR(255) NOT NULL UNIQUE, 
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+    const createDestinationCategoriesTable = `
+      CREATE TABLE IF NOT EXISTS destination_categories (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL UNIQUE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `;
-    await connection.query(createCategoriesTable);
-    console.log("Table 'categories' created or already exists.");
+    await connection.query(createDestinationCategoriesTable);
+    console.log("Tabla 'destination_categories' creada o ya existe.");
 
-    // Tabla de productos: almacena los productos de la tienda o sistema
-
+    // Tabla de destinos turísticos: almacena los lugares turísticos de Colombia
     /*
-    CREATE TABLE IF NOT EXISTS products (
-        id INT AUTO_INCREMENT PRIMARY KEY, // Identificador único
-        name VARCHAR(255) NOT NULL, // Nombre del producto
-        description TEXT, // Descripción
-        price DECIMAL(10, 2), // Precio
+    CREATE TABLE IF NOT EXISTS destinations (
+        id INT AUTO_INCREMENT PRIMARY KEY, // Identificador único del destino
+        name VARCHAR(255) NOT NULL, // Nombre del destino turístico
+        description TEXT, // Descripción del lugar
+        location VARCHAR(255), // Ubicación (ciudad, departamento o coordenadas)
+        image_url VARCHAR(512), // URL de imagen representativa
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP // Fecha de creación
       )
     */
-    const createProductsTable = `
-      CREATE TABLE IF NOT EXISTS products (
-        id INT AUTO_INCREMENT PRIMARY KEY, 
-        name VARCHAR(255) NOT NULL, 
-        description TEXT, 
-        price DECIMAL(10, 2), 
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+    const createDestinationsTable = `
+      CREATE TABLE IF NOT EXISTS destinations (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        description TEXT,
+        location VARCHAR(255),
+        image_url VARCHAR(512),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `;
-    await connection.query(createProductsTable);
-    console.log("Table 'products' created or already exists.");
+    await connection.query(createDestinationsTable);
+    console.log("Tabla 'destinations' creada o ya existe.");
 
-    // Tabla de relación muchos a muchos entre productos y categorías
+    // Tabla de relación muchos a muchos entre destinos y categorías
     /*
-    CREATE TABLE IF NOT EXISTS product_categories (
-        product_id INT, // ID del producto
+    CREATE TABLE IF NOT EXISTS destination_category_rel (
+        destination_id INT, // ID del destino turístico
         category_id INT, // ID de la categoría
-        PRIMARY KEY (product_id, category_id), // Clave primaria compuesta
-        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE, // FK a productos
-        FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE // FK a categorías
+        PRIMARY KEY (destination_id, category_id), // Clave primaria compuesta
+        FOREIGN KEY (destination_id) REFERENCES destinations(id) ON DELETE CASCADE, // FK a destinos
+        FOREIGN KEY (category_id) REFERENCES destination_categories(id) ON DELETE CASCADE // FK a categorías
       )
     */
-    const createProductCategoriesTable = `
-      CREATE TABLE IF NOT EXISTS product_categories (
-        product_id INT, 
-        category_id INT, 
-        PRIMARY KEY (product_id, category_id), 
-        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE, 
-        FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE 
+    const createDestinationCategoryRelTable = `
+      CREATE TABLE IF NOT EXISTS destination_category_rel (
+        destination_id INT,
+        category_id INT,
+        PRIMARY KEY (destination_id, category_id),
+        FOREIGN KEY (destination_id) REFERENCES destinations(id) ON DELETE CASCADE,
+        FOREIGN KEY (category_id) REFERENCES destination_categories(id) ON DELETE CASCADE
       )
     `;
-    await connection.query(createProductCategoriesTable);
-    console.log("Table 'product_categories' created or already exists.");
+    await connection.query(createDestinationCategoryRelTable);
+    console.log("Tabla 'destination_category_rel' creada o ya existe.");
 
   } catch (error) {
     // Manejo de errores: muestra el error y termina el proceso con código de error

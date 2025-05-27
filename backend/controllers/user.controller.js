@@ -17,6 +17,38 @@ async function getConnection() {
 // --- CONTROLADORES DE USUARIO --- //
 
 /**
+ * @function uploadProfileImage
+ * @description Sube una imagen de perfil para el usuario y actualiza su campo profile_image.
+ * @param {object} req - Objeto de solicitud Express (req.file contiene el archivo de imagen, req.params.id el ID de usuario).
+ * @param {object} res - Objeto de respuesta Express.
+ */
+exports.uploadProfileImage = async (req, res) => {
+  const userId = req.params.id;
+  // Verifica que se haya subido un archivo
+  if (!req.file) {
+    return res.status(400).send({ message: 'No se ha subido ninguna imagen.' });
+  }
+  // Construye la URL relativa para guardar en la base de datos
+  const imageUrl = `/uploads/${req.file.filename}`;
+  let connection;
+  try {
+    connection = await getConnection();
+    // Actualiza el campo profile_image del usuario
+    const sql = 'UPDATE users SET profile_image = ? WHERE id = ?';
+    const [result] = await connection.execute(sql, [imageUrl, userId]);
+    if (result.affectedRows === 0) {
+      return res.status(404).send({ message: 'Usuario no encontrado.' });
+    }
+    res.status(200).send({ message: 'Imagen de perfil actualizada correctamente.', profile_image: imageUrl });
+  } catch (error) {
+    console.error('Error al subir imagen de perfil:', error);
+    res.status(500).send({ message: 'Error al subir la imagen de perfil.' });
+  } finally {
+    if (connection) await connection.end();
+  }
+};
+
+/**
  * @function createUser
  * @description Crea un nuevo usuario en la base de datos.
  * Hashea la contraseña antes de guardarla.

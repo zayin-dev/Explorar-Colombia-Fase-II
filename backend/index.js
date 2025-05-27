@@ -19,6 +19,11 @@ app.use(cors());
 // Transforma el cuerpo JSON de la solicitud en un objeto JavaScript accesible a través de `req.body`.
 app.use(express.json()); 
 
+// --- SERVIR ARCHIVOS ESTÁTICOS --- //
+// Permite acceder a los archivos subidos (imágenes, multimedia, etc.) desde la carpeta 'public/uploads'.
+// Ejemplo: http://localhost:3001/uploads/archivo.jpg
+const path = require('path');
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 // --- RUTA DE PRUEBA --- //
 // Una ruta simple para verificar que el servidor está funcionando.
 // GET http://localhost:3001/

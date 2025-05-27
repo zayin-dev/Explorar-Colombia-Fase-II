@@ -1,5 +1,7 @@
 
-CHANGELOG DETALLADO DEL PROYECTO
+CHANGELOG
+
+Version 0.0.1
 
 1. Organización de la estructura del proyecto
 - Se crearon las carpetas `frontend` y `backend` para separar la lógica del cliente y del servidor.
@@ -53,3 +55,16 @@ CHANGELOG DETALLADO DEL PROYECTO
 - En éxito: se guarda `accessToken`, se redirige.
 - En error: se muestra mensaje adecuado.
 
+---
+
+Version 0.0.2
+
+- Se modifico el script de creacion de la base de datos. Se eliminaron tablas antiguas y en su lugar se colocaron un total de tres tablas las cuales van mas acorde con el proyecto. Los nuevos cambios tambien incluyen la eliminacion de tablas antiguas y nuevas, asi se evitaran errores de tablas duplicadas.
+
+- Se modifico el script de creacion de usuarios para que ahora, ademas de crear los usuarios, tambien cree los datos de prueba para los destinos turisticos y las categorias de los destinos turisticos.
+
+- Se implementa la opcion de subida de archivos para que los usuarios puedan subir archivos a la base de datos, mas especificamente se implemento la subida de imagenes, para que de esta forma los usuarios puedan subir imagenes para su perfil. Para ello:
+    - Se modifico el archivo `index.js` en el backend para que acepte archivos, los cuales se guardan en la carpeta `public/uploads` 
+    - Se implemento un middleware para que se encargue de la subida de archivos. La dependencia `multer` se encarga de la subida de archivos.
+    - Se agrego la ruta protegida `PUT /api/users/:id/profile-image` que utilizara el middleware de subida de archivos para subir la imagen del perfil del usuario.
+    

@@ -72,6 +72,96 @@ async function seedUsers() {
 
     console.log('User seeding process completed.');
 
+    // --- Datos de prueba para categorías de destinos turísticos ---
+    const categoriesToSeed = [
+      { name: 'Playa' },
+      { name: 'Montaña' },
+      { name: 'Ciudad' },
+      { name: 'Parque Nacional' }
+    ];
+    for (const cat of categoriesToSeed) {
+      try {
+        const sql = 'INSERT INTO destination_categories (name) VALUES (?)';
+        await connection.execute(sql, [cat.name]);
+        console.log(`Categoría '${cat.name}' insertada.`);
+      } catch (error) {
+        if (error.code === 'ER_DUP_ENTRY') {
+          console.warn(`La categoría '${cat.name}' ya existe.`);
+        } else {
+          console.error(`Error insertando categoría '${cat.name}':`, error.message);
+        }
+      }
+    }
+
+    // --- Datos de prueba para destinos turísticos ---
+    const destinationsToSeed = [
+      {
+        name: 'Cartagena',
+        description: 'Ciudad amurallada y destino turístico en la costa Caribe.',
+        location: 'Cartagena, Bolívar',
+        image_url: 'https://ejemplo.com/cartagena.jpg'
+      },
+      {
+        name: 'Parque Tayrona',
+        description: 'Parque Nacional Natural con playas y selva.',
+        location: 'Santa Marta, Magdalena',
+        image_url: 'https://ejemplo.com/tayrona.jpg'
+      },
+      {
+        name: 'Medellín',
+        description: 'Ciudad de la eterna primavera.',
+        location: 'Medellín, Antioquia',
+        image_url: 'https://ejemplo.com/medellin.jpg'
+      }
+    ];
+    for (const dest of destinationsToSeed) {
+      try {
+        const sql = 'INSERT INTO destinations (name, description, location, image_url) VALUES (?, ?, ?, ?)';
+        await connection.execute(sql, [dest.name, dest.description, dest.location, dest.image_url]);
+        console.log(`Destino '${dest.name}' insertado.`);
+      } catch (error) {
+        if (error.code === 'ER_DUP_ENTRY') {
+          console.warn(`El destino '${dest.name}' ya existe.`);
+        } else {
+          console.error(`Error insertando destino '${dest.name}':`, error.message);
+        }
+      }
+    }
+
+    // --- Relacionar destinos con categorías ---
+    // Nota: Esto asume que los nombres son únicos y que las inserciones anteriores funcionaron
+    const destinationCategoryRelations = [
+      // Cartagena: Playa, Ciudad
+      { destination: 'Cartagena', categories: ['Playa', 'Ciudad'] },
+      // Parque Tayrona: Playa, Parque Nacional
+      { destination: 'Parque Tayrona', categories: ['Playa', 'Parque Nacional'] },
+      // Medellín: Ciudad
+      { destination: 'Medellín', categories: ['Ciudad'] }
+    ];
+    for (const rel of destinationCategoryRelations) {
+      // Obtener IDs de destino y categorías
+      const [destRows] = await connection.execute('SELECT id FROM destinations WHERE name = ?', [rel.destination]);
+      if (destRows.length === 0) continue;
+      const destId = destRows[0].id;
+      for (const catName of rel.categories) {
+        const [catRows] = await connection.execute('SELECT id FROM destination_categories WHERE name = ?', [catName]);
+        if (catRows.length === 0) continue;
+        const catId = catRows[0].id;
+        try {
+          const sql = 'INSERT INTO destination_category_rel (destination_id, category_id) VALUES (?, ?)';
+          await connection.execute(sql, [destId, catId]);
+          console.log(`Destino '${rel.destination}' relacionado con categoría '${catName}'.`);
+        } catch (error) {
+          if (error.code === 'ER_DUP_ENTRY') {
+            console.warn(`La relación entre '${rel.destination}' y '${catName}' ya existe.`);
+          } else {
+            console.error(`Error relacionando '${rel.destination}' con '${catName}':`, error.message);
+          }
+        }
+      }
+    }
+    console.log('Datos de prueba de destinos y categorías insertados.');
+
   } catch (error) {
     console.error('Error during user seeding:', error);
   } finally {
