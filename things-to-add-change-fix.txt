@@ -21,6 +21,8 @@ PENDING (Post-Core CRUD) - crear una contraseña temporal para los usuarios que 
 
 - Agregar un componente en el cual los ususarios puedan dejar reseñas de sitios turisticos que hayan visitado.
 
+- Agregar una galeria de imagenes de algunos sitios turisticos. 
+
 
 # Funcionalidades de UI (opcionales):
 
