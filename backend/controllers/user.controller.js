@@ -23,6 +23,8 @@ async function getConnection() {
  * @param {object} res - Objeto de respuesta Express.
  */
 exports.uploadProfileImage = async (req, res) => {
+  console.log('[uploadProfileImage] req.userId:', req.userId, 'req.role:', req.role, 'req.params.id:', req.params.id, 'req.file:', req.file);
+
   const userId = req.params.id;
   // Verifica que se haya subido un archivo
   if (!req.file) {
@@ -103,7 +105,7 @@ exports.getAllUsers = async (req, res) => {
   try {
     connection = await getConnection();
     // Consulta SQL para seleccionar todos los usuarios, excluyendo la contraseña por seguridad
-    const sql = 'SELECT id, username, email, created_at FROM users'; 
+    const sql = 'SELECT id, username, email, role, profile_image, created_at FROM users';
     const [users] = await connection.query(sql);
     // Envía la lista de usuarios con un estado 200 OK
     res.status(200).send(users);

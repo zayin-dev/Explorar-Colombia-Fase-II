@@ -7,7 +7,7 @@ function AdminPanel() {
     const [users, setUsers] = useState([]); // Almacena la lista de usuarios traída del backend
     const [isLoading, setIsLoading] = useState(true); // Indica si los datos de usuarios se están cargando
     const [error, setError] = useState(null); // Almacena mensajes de error generales (ej. al cargar usuarios)
-    
+
     // Estados para el modal de CREAR usuario
     const [showCreateModal, setShowCreateModal] = useState(false); // Controla la visibilidad del modal de creación
     const [newUser, setNewUser] = useState({ username: '', email: '', password: '', role: 'user' }); // Datos del nuevo usuario a crear
@@ -142,7 +142,7 @@ function AdminPanel() {
                 updatePayload.role = role;
             } else {
                 // Asegura que el rol del admin logueado no se cambie desde aquí (aunque el campo esté disabled)
-                updatePayload.role = editingUser.role; 
+                updatePayload.role = editingUser.role;
             }
 
             const response = await fetch(`http://localhost:3001/api/users/${id}`, {
@@ -154,7 +154,7 @@ function AdminPanel() {
             if (!response.ok) throw new Error(responseData.message || `Error al actualizar usuario: ${response.status}`);
             setEditSuccess(`Usuario '${responseData.username}' actualizado exitosamente!`);
             fetchUsers(); // Recarga la lista de usuarios
-            
+
             // Si fue una auto-edición y se cambió el username o email, actualiza localStorage
             if (isSelfEdit && loggedInUser && (responseData.username !== loggedInUser.username || responseData.email !== loggedInUser.email)) {
                 const updatedLoggedInUser = { ...loggedInUser, username: responseData.username, email: responseData.email, role: responseData.role }; // rol se mantiene
@@ -203,7 +203,7 @@ function AdminPanel() {
 
     // --- RENDERIZADO DEL COMPONENTE ---
     // Muestra mensaje de carga si isLoading es true y no hay error general
-    if (isLoading && !error) { 
+    if (isLoading && !error) {
         return <div className="container mt-4"><p>Cargando usuarios...</p></div>;
     }
     // Muestra mensaje de error general si existe
@@ -211,7 +211,7 @@ function AdminPanel() {
 
     // Filtra los usuarios basándose en el término de búsqueda (ignora mayúsculas/minúsculas)
     // Busca tanto en username como en email.
-    const filteredUsers = users.filter(user => 
+    const filteredUsers = users.filter(user =>
         user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -222,7 +222,7 @@ function AdminPanel() {
             {/* Alertas para mensajes de éxito/error de operaciones CRUD (visibles en la parte superior) */}
             {createSuccess && <Alert variant="success" onClose={() => setCreateSuccess(null)} dismissible>{createSuccess}</Alert>}
             {createError && <Alert variant="danger" onClose={() => setCreateError(null)} dismissible>{createError}</Alert>}
-            {/* Las alertas de create/edit también se muestran dentro de sus modales */} 
+            {/* Las alertas de create/edit también se muestran dentro de sus modales */}
             {deleteSuccess && <Alert variant="success" onClose={() => setDeleteSuccess(null)} dismissible>{deleteSuccess}</Alert>}
             {deleteError && <Alert variant="danger" onClose={() => setDeleteError(null)} dismissible>{deleteError}</Alert>}
 
@@ -233,9 +233,9 @@ function AdminPanel() {
 
             {/* Campo de búsqueda */}
             <Form.Group className="mb-3">
-                <Form.Control 
-                    type="text" 
-                    placeholder="Buscar por usuario o email..." 
+                <Form.Control
+                    type="text"
+                    placeholder="Buscar por usuario o email..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)} // Actualiza el estado searchTerm al escribir
                 />
@@ -247,7 +247,7 @@ function AdminPanel() {
             )}
             {/* Mensaje si no hay usuarios cargados en absoluto (lista inicial vacía) */}
             {users.length === 0 && !isLoading && (
-                 <Alert variant="info">No hay usuarios registrados en el sistema.</Alert>
+                <Alert variant="info">No hay usuarios registrados en el sistema.</Alert>
             )}
 
             {/* Tabla de usuarios (solo se muestra si hay usuarios filtrados) */}
@@ -255,6 +255,7 @@ function AdminPanel() {
                 <table className="table table-striped table-hover">
                     <thead className="table-dark">
                         <tr>
+                            <th>Avatar</th>
                             <th>ID</th>
                             <th>Usuario</th>
                             <th>Email</th>
@@ -263,29 +264,52 @@ function AdminPanel() {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredUsers.map(user => (
-                            <tr key={user.id}>
-                                <td>{user.id}</td>
-                                <td>{user.username}</td>
-                                <td>{user.email}</td>
-                                <td>{user.role}</td>
-                                <td>
-                                    {/* Botón para abrir modal de edición */}
-                                    <Button variant="warning" size="sm" onClick={() => handleEditModalOpen(user)} className="me-2">
-                                        Editar
-                                    </Button>
-                                    {/* Botón para eliminar usuario (deshabilitado para auto-eliminación) */}
-                                    <Button 
-                                        variant="danger" 
-                                        size="sm" 
-                                        onClick={() => handleDeleteUser(user.id, user.username)}
-                                        disabled={user.id === loggedInUserId} 
-                                    >
-                                        Eliminar
-                                    </Button>
-                                </td>
-                            </tr>
-                        ))}
+                        {filteredUsers.map(user => {
+                            let avatar = null;
+                            if (user.profile_image) {
+                                avatar = user.profile_image.startsWith('http')
+                                    ? user.profile_image
+                                    : `http://localhost:3001${user.profile_image}`;
+                            }
+                            return (
+                                <tr key={user.id}>
+                                    <td>
+                                        {avatar ? (
+                                            <img
+                                                src={avatar}
+                                                alt="avatar"
+                                                style={{ width: 38, height: 38, borderRadius: '50%', objectFit: 'cover', border: '2px solid #ddd', background: '#eee' }}
+                                            />
+                                        ) : (
+                                            <span
+                                                style={{ width: 38, height: 38, borderRadius: '50%', background: '#bbb', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 18, border: '2px solid #ddd' }}
+                                            >
+                                                <i className="bi bi-person-circle" />
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td>{user.id}</td>
+                                    <td>{user.username}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.role}</td>
+                                    <td>
+                                        {/* Botón para abrir modal de edición */}
+                                        <Button variant="warning" size="sm" onClick={() => handleEditModalOpen(user)} className="me-2">
+                                            Editar
+                                        </Button>
+                                        {/* Botón para eliminar usuario (deshabilitado para auto-eliminación) */}
+                                        <Button
+                                            variant="danger"
+                                            size="sm"
+                                            onClick={() => handleDeleteUser(user.id, user.username)}
+                                            disabled={user.id === loggedInUserId}
+                                        >
+                                            Eliminar
+                                        </Button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             )}
@@ -326,45 +350,47 @@ function AdminPanel() {
                         </Form>
                     )}
                 </Modal.Body>
-            </Modal>
-            
+            </Modal >
+
             {/* Modal de Edición de Usuario (solo se renderiza si hay un 'editingUser') */}
-            {editingUser && (
-                <Modal show={showEditModal} onHide={handleEditModalClose} backdrop="static" keyboard={false}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Editar Usuario: {editingUser.username}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        {editError && <Alert variant="danger">{editError}</Alert>}
-                        {editSuccess && <Alert variant="success">{editSuccess}</Alert>}
-                        {/* El formulario solo se muestra si no hay mensaje de éxito */}
-                        {!editSuccess && (
-                            <Form onSubmit={handleEditUserSubmit}>
-                                <Form.Group className="mb-3" controlId="editFormUsername">
-                                    <Form.Label>Usuario</Form.Label>
-                                    <Form.Control type="text" placeholder="Ingrese usuario" name="username" value={editFormData.username} onChange={handleEditFormChange} required />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="editFormEmail">
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" placeholder="Ingrese email" name="email" value={editFormData.email} onChange={handleEditFormChange} required />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="editFormRole">
-                                    <Form.Label>Rol</Form.Label>
-                                    {/* Campo de rol deshabilitado si es auto-edición */}
-                                    <Form.Select name="role" value={editFormData.role} onChange={handleEditFormChange} disabled={isSelfEdit}>
-                                        <option value="user">Usuario</option>
-                                        <option value="admin">Administrador</option>
-                                    </Form.Select>
-                                    {isSelfEdit && <Form.Text className="text-muted">No puedes cambiar tu propio rol.</Form.Text>}
-                                </Form.Group>
-                                <Button variant="secondary" onClick={handleEditModalClose} className="me-2">Cerrar</Button>
-                                <Button variant="primary" type="submit">Guardar Cambios</Button>
-                            </Form>
-                        )}
-                    </Modal.Body>
-                </Modal>
-            )}
-        </div>
+            {
+                editingUser && (
+                    <Modal show={showEditModal} onHide={handleEditModalClose} backdrop="static" keyboard={false}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Editar Usuario: {editingUser.username}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            {editError && <Alert variant="danger">{editError}</Alert>}
+                            {editSuccess && <Alert variant="success">{editSuccess}</Alert>}
+                            {/* El formulario solo se muestra si no hay mensaje de éxito */}
+                            {!editSuccess && (
+                                <Form onSubmit={handleEditUserSubmit}>
+                                    <Form.Group className="mb-3" controlId="editFormUsername">
+                                        <Form.Label>Usuario</Form.Label>
+                                        <Form.Control type="text" placeholder="Ingrese usuario" name="username" value={editFormData.username} onChange={handleEditFormChange} required />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="editFormEmail">
+                                        <Form.Label>Email</Form.Label>
+                                        <Form.Control type="email" placeholder="Ingrese email" name="email" value={editFormData.email} onChange={handleEditFormChange} required />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="editFormRole">
+                                        <Form.Label>Rol</Form.Label>
+                                        {/* Campo de rol deshabilitado si es auto-edición */}
+                                        <Form.Select name="role" value={editFormData.role} onChange={handleEditFormChange} disabled={isSelfEdit}>
+                                            <option value="user">Usuario</option>
+                                            <option value="admin">Administrador</option>
+                                        </Form.Select>
+                                        {isSelfEdit && <Form.Text className="text-muted">No puedes cambiar tu propio rol.</Form.Text>}
+                                    </Form.Group>
+                                    <Button variant="secondary" onClick={handleEditModalClose} className="me-2">Cerrar</Button>
+                                    <Button variant="primary" type="submit">Guardar Cambios</Button>
+                                </Form>
+                            )}
+                        </Modal.Body>
+                    </Modal>
+                )
+            }
+        </div >
     );
 }
 

@@ -74,7 +74,7 @@ async function initializeDatabase() {
         role VARCHAR(50) NOT NULL DEFAULT 'user', 
         reset_password_token VARCHAR(255) NULL, 
         reset_password_expires DATETIME NULL, 
-        profile_image VARCHAR(512) NULL, // Ruta o URL de la imagen de perfil
+        profile_image VARCHAR(512) NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
       )
     `;

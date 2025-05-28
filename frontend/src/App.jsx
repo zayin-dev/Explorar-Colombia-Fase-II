@@ -24,9 +24,14 @@ const AppContent = () => {
   });
   const navigate = useNavigate();
 
-  const login = () => {
-    localStorage.setItem('loggedIn', 'true');
-    setIsAuthenticated(true);
+  const login = (success) => {
+    if (success) {
+      localStorage.setItem('loggedIn', 'true');
+      setIsAuthenticated(true);
+    } else {
+      localStorage.removeItem('loggedIn');
+      setIsAuthenticated(false);
+    }
   };
 
   const logout = () => {

@@ -67,4 +67,8 @@ Version 0.0.2
     - Se modifico el archivo `index.js` en el backend para que acepte archivos, los cuales se guardan en la carpeta `public/uploads` 
     - Se implemento un middleware para que se encargue de la subida de archivos. La dependencia `multer` se encarga de la subida de archivos.
     - Se agrego la ruta protegida `PUT /api/users/:id/profile-image` que utilizara el middleware de subida de archivos para subir la imagen del perfil del usuario.
+    - se modifico el archivo `vite.config.js` agregando un proxy para que se pueda acceder a la carpeta `public/uploads` desde el frontend.
+    - 
     
+- Al parecer, al momento de dar click en el boton de iniciar sesion en el login, por alguna razon el panel se hace accesible sin la necesidad de tener credenciales. Eso se ha solucionado modificando la logica del login en el archivo `App.jsx` para que ahora cambie el estado de la variable `isAuthenticated` a `false` cuando el usuario no se loguee correctamente.
+

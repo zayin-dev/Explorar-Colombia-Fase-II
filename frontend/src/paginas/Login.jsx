@@ -34,7 +34,7 @@ function Login({ onLogin }) {
    * @description Maneja el proceso de inicio de sesión.
    * Envía las credenciales al backend, procesa la respuesta y actualiza el estado de la aplicación.
    */
-  const handleLogin = async () => { 
+  const handleLogin = async () => {
     setError(''); // Limpia cualquier error previo antes de un nuevo intento.
     try {
       // Realiza la petición POST al endpoint de login del backend.
@@ -44,7 +44,7 @@ function Login({ onLogin }) {
           'Content-Type': 'application/json', // Indica que el cuerpo de la petición es JSON.
         },
         // Convierte las credenciales a formato JSON para el cuerpo de la petición.
-        body: JSON.stringify({ username: usuario, password: clave }), 
+        body: JSON.stringify({ username: usuario, password: clave }),
       });
 
       const data = await response.json(); // Parsea la respuesta JSON del servidor.
@@ -52,12 +52,12 @@ function Login({ onLogin }) {
       if (response.ok) { // Si la respuesta del servidor es exitosa (ej. status 200).
         // Almacena el token de acceso y los datos del usuario en localStorage.
         localStorage.setItem('accessToken', data.accessToken);
-        localStorage.setItem('user', JSON.stringify({ id: data.id, username: data.username, email: data.email, role: data.role })); 
+        localStorage.setItem('user', JSON.stringify({ id: data.id, username: data.username, email: data.email, role: data.role, profile_image: data.profile_image }));
         localStorage.setItem('loggedIn', 'true'); // Indica que el usuario ha iniciado sesión.
-        
+
         // Ejecuta el callback onLogin (si se proporcionó) indicando éxito.
         if (typeof onLogin === 'function') {
-            onLogin(true); 
+          onLogin(true);
         }
         navigate('/panel'); // Redirige al usuario al panel de administración o dashboard.
       } else {
@@ -65,7 +65,7 @@ function Login({ onLogin }) {
         setError(data.message || 'Error al iniciar sesión. Intente de nuevo.');
         // Ejecuta el callback onLogin (si se proporcionó) indicando fracaso.
         if (typeof onLogin === 'function') {
-            onLogin(false);
+          onLogin(false);
         }
       }
     } catch (err) {
@@ -91,9 +91,9 @@ function Login({ onLogin }) {
           {/* Campo para el nombre de usuario */}
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Usuario</Form.Label>
-            <Form.Control 
-              type="text" 
-              placeholder="Ingrese su usuario" 
+            <Form.Control
+              type="text"
+              placeholder="Ingrese su usuario"
               value={usuario} // Valor controlado por el estado 'usuario'.
               onChange={(e) => setUsuario(e.target.value)} // Actualiza el estado 'usuario' al cambiar el input.
             />
@@ -102,9 +102,9 @@ function Login({ onLogin }) {
           {/* Campo para la contraseña */}
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Contraseña</Form.Label>
-            <Form.Control 
-              type="password" 
-              placeholder="Contraseña" 
+            <Form.Control
+              type="password"
+              placeholder="Contraseña"
               value={clave} // Valor controlado por el estado 'clave'.
               onChange={(e) => setClave(e.target.value)} // Actualiza el estado 'clave' al cambiar el input.
             />

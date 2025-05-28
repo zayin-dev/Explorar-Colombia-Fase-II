@@ -70,6 +70,7 @@ exports.login = async (req, res) => {
     // Envía la respuesta con los datos del usuario y el token de acceso
     res.status(200).send({
       ...userResponse,
+      profile_image: user.profile_image || null,
       accessToken: token
     });
 

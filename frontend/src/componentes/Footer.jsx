@@ -20,7 +20,7 @@ function Footer() {
     },
     {
       nombre: "Sara Sofia",
-      correo: "Sara.Sofia@gmail.com",
+      correo: "Sapa.Sofia@gmail.com",
       foto: Sara,
       instagram: "https://www.instagram.com/sarasofia/",
       facebook: "https://www.facebook.com/sarasofia/",
